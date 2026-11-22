@@ -131,21 +131,11 @@ struct BuktiBayarPicker: View {
                 )
             }
 
-            HStack(spacing: 8) {
-                PhotosPicker(selection: $pickerItem, matching: .images) {
-                    Label(imageData == nil ? "Pilih Foto" : "Ganti Foto", systemImage: "photo")
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.bordered)
-
-                Button {
-                    imageData = Self.buatStrukContoh()
-                } label: {
-                    Label("Bukti Contoh", systemImage: "doc.text.image")
-                }
-                .buttonStyle(.bordered)
-                .tint(.teal)
+            PhotosPicker(selection: $pickerItem, matching: .images) {
+                Label(imageData == nil ? "Pilih Foto" : "Ganti Foto", systemImage: "photo")
+                    .frame(maxWidth: .infinity)
             }
+            .buttonStyle(.bordered)
         }
         .onChange(of: pickerItem) { _, item in
             guard let item else { return }
@@ -155,32 +145,5 @@ struct BuktiBayarPicker: View {
                 }
             }
         }
-    }
-
-    private static func buatStrukContoh() -> Data? {
-        let size = CGSize(width: 460, height: 240)
-        let renderer = UIGraphicsImageRenderer(size: size)
-        let image = renderer.image { ctx in
-            UIColor.systemBackground.setFill()
-            ctx.fill(CGRect(origin: .zero, size: size))
-            UIColor.systemBlue.withAlphaComponent(0.12).setFill()
-            ctx.fill(CGRect(x: 0, y: 0, width: size.width, height: 56))
-
-            let titleAttr: [NSAttributedString.Key: Any] = [
-                .font: UIFont.boldSystemFont(ofSize: 20),
-                .foregroundColor: UIColor.systemBlue
-            ]
-            NSString(string: "Bukti Pelunasan")
-                .draw(at: CGPoint(x: 20, y: 16), withAttributes: titleAttr)
-
-            let bodyAttr: [NSAttributedString.Key: Any] = [
-                .font: UIFont.monospacedSystemFont(ofSize: 15, weight: .medium),
-                .foregroundColor: UIColor.label
-            ]
-            let waktu = FormatHelper.tanggal(Date())
-            NSString(string: "Status : LUNAS\nTanggal: \(waktu)\nMetode : Transfer Bank")
-                .draw(at: CGPoint(x: 20, y: 80), withAttributes: bodyAttr)
-        }
-        return image.pngData()
     }
 }
