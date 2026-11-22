@@ -64,7 +64,7 @@ final class DatabaseManager {
         );
 
         CREATE TABLE IF NOT EXISTS garasi (
-            kode_garasi TEXT PRIMARY KEY,
+            id_garasi TEXT PRIMARY KEY,
             tipe_garasi TEXT NOT NULL CHECK(tipe_garasi IN ('SEPEDA', 'MOBIL', 'MOBIL_LISTRIK')),
             nomor_urut INTEGER NOT NULL CHECK(nomor_urut BETWEEN 1 AND 999),
             harga_sewa_harian REAL NOT NULL CHECK(harga_sewa_harian > 0),
@@ -87,7 +87,7 @@ final class DatabaseManager {
         CREATE TABLE IF NOT EXISTS transaksi_sewa (
             id_transaksi INTEGER PRIMARY KEY AUTOINCREMENT,
             id_penyewa INTEGER NOT NULL REFERENCES users(id_user),
-            kode_garasi TEXT NOT NULL REFERENCES garasi(kode_garasi),
+            id_garasi TEXT NOT NULL REFERENCES garasi(id_garasi),
             id_kendaraan INTEGER NOT NULL REFERENCES kendaraan(id_kendaraan),
             tipe_sewa TEXT NOT NULL CHECK(tipe_sewa IN ('HARIAN', 'BULANAN')),
             jumlah_hari INTEGER NOT NULL,
@@ -232,7 +232,7 @@ final class DatabaseManager {
         do {
             let sql = """
             INSERT INTO garasi (
-                kode_garasi, tipe_garasi, nomor_urut, harga_sewa_harian,
+                id_garasi, tipe_garasi, nomor_urut, harga_sewa_harian,
                 harga_listrik_per_kwh, status, created_at
             ) VALUES (?, ?, ?, ?, ?, ?, ?);
             """
@@ -274,7 +274,7 @@ final class DatabaseManager {
 
     func ambilSemuaGarasi() throws -> [Garasi] {
         let sql = """
-        SELECT kode_garasi, tipe_garasi, nomor_urut, harga_sewa_harian, harga_listrik_per_kwh, status
+        SELECT id_garasi, tipe_garasi, nomor_urut, harga_sewa_harian, harga_listrik_per_kwh, status
         FROM garasi ORDER BY tipe_garasi ASC, nomor_urut ASC;
         """
         return try jalankanQueryGarasi(sql: sql, tanggalFilter: nil)
@@ -284,13 +284,13 @@ final class DatabaseManager {
         try rilisGarasiKadaluarsa(perTanggal: tanggal)
         let awalHari = Calendar.current.startOfDay(for: tanggal)
         let sql = """
-        SELECT g.kode_garasi, g.tipe_garasi, g.nomor_urut, g.harga_sewa_harian,
+        SELECT g.id_garasi, g.tipe_garasi, g.nomor_urut, g.harga_sewa_harian,
                g.harga_listrik_per_kwh, g.status
         FROM garasi g
         WHERE g.status = 'AVAILABLE'
           AND NOT EXISTS (
               SELECT 1 FROM transaksi_sewa t
-              WHERE t.kode_garasi = g.kode_garasi
+              WHERE t.id_garasi = g.id_garasi
                 AND t.tanggal_mulai <= ? AND t.tanggal_selesai >= ?
           )
         ORDER BY g.tipe_garasi ASC, g.nomor_urut ASC;
@@ -305,7 +305,7 @@ final class DatabaseManager {
         WHERE status = 'USED'
           AND NOT EXISTS (
               SELECT 1 FROM transaksi_sewa t
-              WHERE t.kode_garasi = garasi.kode_garasi AND t.tanggal_selesai >= ?
+              WHERE t.id_garasi = garasi.id_garasi AND t.tanggal_selesai >= ?
           );
         """
         var stmt: OpaquePointer?
@@ -451,7 +451,7 @@ extension DatabaseManager {
 
             let sqlSewa = """
             INSERT INTO transaksi_sewa (
-                id_penyewa, kode_garasi, id_kendaraan, tipe_sewa, jumlah_hari,
+                id_penyewa, id_garasi, id_kendaraan, tipe_sewa, jumlah_hari,
                 tanggal_mulai, tanggal_selesai, biaya_sewa, biaya_listrik,
                 total_biaya, bukti_pelunasan, created_at
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
@@ -573,7 +573,7 @@ extension DatabaseManager {
     }
 
     private func updateStatusGarasi(kode: String, status: StatusGarasi) throws {
-        let sql = "UPDATE garasi SET status = ? WHERE kode_garasi = ?;"
+        let sql = "UPDATE garasi SET status = ? WHERE id_garasi = ?;"
         var stmt: OpaquePointer?
         guard sqlite3_prepare_v2(db, sql, -1, &stmt, nil) == SQLITE_OK else {
             throw PesanError(pesanErrorSQLite())
@@ -625,13 +625,13 @@ extension DatabaseManager {
             t.biaya_sewa, t.biaya_listrik, t.total_biaya, t.bukti_pelunasan,
             u.id_user, u.nik, u.nama_lengkap, u.no_telepon, u.email, u.password, u.role,
             u.status_verifikasi, u.created_at,
-            g.kode_garasi, g.tipe_garasi, g.nomor_urut, g.harga_sewa_harian,
+            g.id_garasi, g.tipe_garasi, g.nomor_urut, g.harga_sewa_harian,
             g.harga_listrik_per_kwh, g.status,
             k.id_kendaraan, k.id_penyewa, k.tipe, k.nomor_plat, k.merek, k.tipe_model,
             k.kapasitas_listrik_kwh
         FROM transaksi_sewa t
         INNER JOIN users u ON u.id_user = t.id_penyewa
-        INNER JOIN garasi g ON g.kode_garasi = t.kode_garasi
+        INNER JOIN garasi g ON g.id_garasi = t.id_garasi
         INNER JOIN kendaraan k ON k.id_kendaraan = t.id_kendaraan
         \(whereClause)
         ORDER BY t.created_at DESC;
