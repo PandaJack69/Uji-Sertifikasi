@@ -40,7 +40,7 @@ struct AdminGarasiView: View {
                         InfoBanner(message: err, isError: true) { viewModel.clearMessages() }
                     }
 
-                    if viewModel.garasiTersaring.isEmpty {
+                    if viewModel.garasiTerfilter.isEmpty {
                         ContentUnavailableView {
                             Label("Belum Ada Garasi", systemImage: "car.garage.closed")
                         } description: {
@@ -52,7 +52,7 @@ struct AdminGarasiView: View {
                         .padding(.top, 24)
                     } else {
                         LazyVStack(spacing: 12) {
-                            ForEach(viewModel.garasiTersaring) { garasi in
+                            ForEach(viewModel.garasiTerfilter) { garasi in
                                 kartuGarasi(garasi)
                             }
                         }
