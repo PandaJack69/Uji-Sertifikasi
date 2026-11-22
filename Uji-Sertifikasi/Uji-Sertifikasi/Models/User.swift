@@ -98,7 +98,7 @@ final class Penyewa: User {
         guard garasi.status == .available else {
             throw PesanError("Garasi \(garasi.kodeGarasi) sedang digunakan.")
         }
-        guard garasi.isKompatibel(kendaraan: kendaraan) else {
+        guard garasi.isSesuai(kendaraan: kendaraan) else {
             throw PesanError("\(kendaraan.tipe.label) tidak dapat ditempatkan di \(garasi.tipeGarasi.label).")
         }
         if tipeSewa == .harian && !(1...30).contains(durasi) {

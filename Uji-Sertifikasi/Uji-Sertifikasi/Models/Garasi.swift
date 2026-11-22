@@ -44,7 +44,7 @@ class Garasi: Identifiable {
     }
 
     // Override setiap subclass untuk mengecek kecocokan kendaraan
-    func isKompatibel(kendaraan: Kendaraan) -> Bool {
+    func isSesuai(kendaraan: Kendaraan) -> Bool {
         kendaraanSesuai.contains(kendaraan.tipe)
     }
 
@@ -104,7 +104,7 @@ final class GarasiSepeda: Garasi {
     override var tipeGarasi: TipeGarasi { .sepeda }
     override var kendaraanSesuai: [TipeKendaraan] { [.sepeda, .sepedaMotor] }
 
-    override func isKompatibel(kendaraan: Kendaraan) -> Bool {
+    override func isSesuai(kendaraan: Kendaraan) -> Bool {
         kendaraan.tipe == .sepeda || kendaraan.tipe == .sepedaMotor
     }
 }
@@ -114,7 +114,7 @@ final class GarasiMobil: Garasi {
     override var tipeGarasi: TipeGarasi { .mobil }
     override var kendaraanSesuai: [TipeKendaraan] { [.mobil, .mobilListrik] }
 
-    override func isKompatibel(kendaraan: Kendaraan) -> Bool {
+    override func isSesuai(kendaraan: Kendaraan) -> Bool {
         kendaraan.tipe == .mobil || kendaraan.tipe == .mobilListrik
     }
 }
@@ -142,7 +142,7 @@ final class GarasiMobilListrik: Garasi {
         )
     }
 
-    override func isKompatibel(kendaraan: Kendaraan) -> Bool {
+    override func isSesuai(kendaraan: Kendaraan) -> Bool {
         kendaraan.tipe == .mobilListrik
     }
 
