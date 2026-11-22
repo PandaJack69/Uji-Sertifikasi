@@ -45,13 +45,13 @@ struct RootView: View {
     var body: some View {
         Group {
             if let admin = authViewModel.currentUser as? Admin {
-//                AdminTabView(admin: admin, db: authViewModel.db) {
-//                    authViewModel.logout()
-//                }
+                AdminTabView(admin: admin, db: authViewModel.db) {
+                    authViewModel.logout()
+                }
             } else if let penyewa = authViewModel.currentUser as? Penyewa {
-//                PenyewaTabView(penyewa: penyewa, db: authViewModel.db) {
-//                    authViewModel.logout()
-//                }
+                PenyewaTabView(penyewa: penyewa, db: authViewModel.db) {
+                    authViewModel.logout()
+                }
             } else {
                 LoginView(viewModel: authViewModel)
             }

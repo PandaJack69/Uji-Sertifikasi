@@ -88,10 +88,8 @@ struct AdminVerifikasiView: View {
                 if penyewa.statusVerifikasi == .pending {
                     Button("Tolak") { viewModel.verifikasiPenyewa(penyewa, disetujui: false) }
                         .buttonStyle(.bordered)
-                        .tint(.red)
                     Button("Terima") { viewModel.verifikasiPenyewa(penyewa, disetujui: true) }
-                        .buttonStyle(.borderedProminent)
-                        .tint(.green)
+                        .buttonStyle(.bordered)
                 }
             }
         }
@@ -145,10 +143,9 @@ struct DetailKTPSheet: View {
                             dismiss()
                         }
                         .frame(maxWidth: .infinity)
-                        .buttonStyle(.borderedProminent)
-                        .tint(.green)
+                        .buttonStyle(.bordered)
 
-                        Button("Tolak Pendaftaran", role: .destructive) {
+                        Button("Tolak Pendaftaran") {
                             onKeputusan(false)
                             dismiss()
                         }

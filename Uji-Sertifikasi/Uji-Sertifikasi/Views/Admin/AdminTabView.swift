@@ -21,7 +21,7 @@ struct AdminTabView: View {
         TabView {
             AdminGarasiView(viewModel: viewModel, onLogout: onLogout)
                 .tabItem {
-                    Label("Garasi", systemImage: "car.garage.closed")
+                    Label("Garasi", systemImage: "car.2.fill")
                 }
 
             AdminVerifikasiView(viewModel: viewModel, onLogout: onLogout)

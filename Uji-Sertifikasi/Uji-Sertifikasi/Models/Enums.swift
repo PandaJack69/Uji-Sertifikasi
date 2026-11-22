@@ -170,7 +170,7 @@ enum FormatHelper {
 
     // Password di hash dengan SHA-256 (CryptoKit)
     static func hashPassword(_ plainText: String) -> String {
-        let salted = "GarasiKu::\(plainText)"
+        let salted = "Artan::\(plainText)"
         let digest = SHA256.hash(data: Data(salted.utf8))
         return digest.map { String(format: "%02x", $0) }.joined()
     }

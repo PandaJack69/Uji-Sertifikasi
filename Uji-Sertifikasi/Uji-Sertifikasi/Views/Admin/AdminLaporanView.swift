@@ -46,14 +46,11 @@ struct AdminLaporanView: View {
                     HStack(spacing: 8) {
                         MetricBox(
                             title: "Total Sewa",
-                            value: "\(viewModel.transaksiLaporan.count)",
-                            icon: "doc.plaintext.fill"
+                            value: "\(viewModel.transaksiLaporan.count)"
                         )
                         MetricBox(
                             title: "Total Pendapatan",
-                            value: FormatHelper.rupiah(viewModel.totalPendapatanLaporan),
-                            icon: "banknote.fill",
-                            color: .green
+                            value: FormatHelper.rupiah(viewModel.totalPendapatanLaporan)
                         )
                     }
 
@@ -100,7 +97,7 @@ struct AdminLaporanView: View {
                             ForEach(viewModel.transaksiLaporan) { trx in
                                 VStack(alignment: .leading, spacing: 4) {
                                     HStack {
-                                        Text("\(trx.garasi.kodeGarasi) • \(trx.garasi.tipeGarasi.labelSingkat)")
+                                        Text("\(trx.garasi.kodeGarasi) - \(trx.garasi.tipeGarasi.labelSingkat)")
                                             .font(.caption.monospaced().bold())
                                             .foregroundStyle(.blue)
                                         Spacer()

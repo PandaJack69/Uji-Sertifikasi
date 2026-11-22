@@ -36,7 +36,7 @@ struct SewaGarasiListView: View {
                     if viewModel.garasiTersaring.isEmpty {
                         ContentUnavailableView(
                             "Tidak Ada Garasi Tersedia",
-                            systemImage: "car.garage.closed",
+                            systemImage: "car.2.fill",
                             description: Text("Belum ada garasi yang tersedia hari ini untuk filter yang dipilih.")
                         )
                         .padding(.top, 28)

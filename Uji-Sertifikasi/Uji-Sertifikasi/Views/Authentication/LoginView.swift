@@ -17,19 +17,15 @@ struct LoginView: View {
             ScrollView {
                 VStack(spacing: 20) {
                     VStack(spacing: 8) {
-                        Image(systemName: "car.garage.closed")
-                            .font(.system(size: 54))
-                            .foregroundStyle(.blue)
-                            .padding(.top, 24)
-                        Text("GarasiKu")
+                        Text("Uji Sertifikasi App")
                             .font(.largeTitle.bold())
-                        Text("Aplikasi Penyewaan Garasi Kendaraan")
+                        Text("Kevin Artan - 0706012310032")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
 
                     VStack(alignment: .leading, spacing: 14) {
-                        Text("Masuk Akun")
+                        Text("Login")
                             .font(.title3.bold())
 
                         if let err = viewModel.errorMessage {
@@ -51,7 +47,7 @@ struct LoginView: View {
                         Button {
                             viewModel.login()
                         } label: {
-                            Text("Masuk")
+                            Text("Login")
                                 .font(.headline)
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 6)
@@ -62,10 +58,10 @@ struct LoginView: View {
                     .background(RoundedRectangle(cornerRadius: 14).fill(Color(.secondarySystemGroupedBackground)))
 
                     VStack(spacing: 8) {
-                        Text("Belum punya akun Penyewa?")
+                        Text("Registrasi akun")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
-                        Button("Daftar sebagai Penyewa Baru") {
+                        Button("Registrasi") {
                             viewModel.clearMessages()
                             tampilDaftar = true
                         }
@@ -74,20 +70,13 @@ struct LoginView: View {
 
                     HStack {
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("Akun Admin Default")
+                            Text("Akun Admin")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
-                            Text("\(DatabaseManager.defaultAdminEmail) / \(DatabaseManager.defaultAdminPassword)")
-                                .font(.caption.monospaced().bold())
-                        }
-//                        Spacer()
-//                        Button("Isi Otomatis") {
-//                            viewModel.isiAdminDefault()
-//                        }
-//                        .font(.caption.bold())
+                            Text("\(DatabaseManager.defaultAdminEmail)")
+                            Text("\(DatabaseManager.defaultAdminPassword)")                        }
                     }
                     .padding(12)
-//                    .background(RoundedRectangle(cornerRadius: 12).fill(Color(.secondarySystemGroupedBackground)))
                 }
                 .padding(16)
             }

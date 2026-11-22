@@ -21,7 +21,7 @@ struct PenyewaTabView: View {
         TabView {
             SewaGarasiListView(viewModel: viewModel, onLogout: onLogout)
                 .tabItem {
-                    Label("Sewa", systemImage: "car.garage.closed")
+                    Label("Sewa", systemImage: "car.2.fill")
                 }
 
             RiwayatSewaView(viewModel: viewModel, onLogout: onLogout)

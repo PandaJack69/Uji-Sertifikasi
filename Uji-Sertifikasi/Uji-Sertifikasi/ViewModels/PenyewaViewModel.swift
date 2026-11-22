@@ -142,7 +142,7 @@ final class PenyewaViewModel {
             )
             try db.simpanTransaksiBaru(transaksi)
             muatData()
-            successMessage = "Sewa garasi \(garasi.kodeGarasi) berhasil! Status garasi kini 'Used'."
+            successMessage = "Sewa garasi \(garasi.kodeGarasi) berhasil"
             return true
         } catch {
             errorMessage = error.localizedDescription

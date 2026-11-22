@@ -12,15 +12,15 @@ import UIKit
 // Badge status Available, Used, Menunggu, Disetujui, Ditolak
 struct StatusBadge: View {
     let text: String
-    let color: Color
+    var color: Color = .secondary
 
     var body: some View {
         Text(text)
             .font(.caption2.weight(.semibold))
-            .foregroundStyle(color)
+            .foregroundStyle(.secondary)
             .padding(.horizontal, 8)
             .padding(.vertical, 4)
-            .background(Capsule().fill(color.opacity(0.15)))
+            .background(Capsule().fill(Color(.tertiarySystemFill)))
     }
 }
 
@@ -28,15 +28,11 @@ struct StatusBadge: View {
 struct MetricBox: View {
     let title: String
     let value: String
-    let icon: String
     var color: Color = .blue
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 4) {
-                Image(systemName: icon)
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(color)
                 Text(title)
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -60,24 +56,30 @@ struct InfoBanner: View {
     var onDismiss: (() -> Void)?
 
     var body: some View {
-        let color: Color = isError ? .red : .green
         HStack(spacing: 8) {
-            Image(systemName: isError ? "exclamationmark.triangle.fill" : "checkmark.circle.fill")
-                .foregroundStyle(color)
+            Image(systemName: isError ? "exclamationmark.triangle" : "checkmark.circle")
+                .foregroundStyle(.secondary)
             Text(message)
                 .font(.subheadline)
-                .foregroundStyle(color)
+                .foregroundStyle(.primary)
                 .frame(maxWidth: .infinity, alignment: .leading)
             if let onDismiss {
                 Button(action: onDismiss) {
                     Image(systemName: "xmark")
                         .font(.caption.bold())
-                        .foregroundStyle(color)
+                        .foregroundStyle(.secondary)
                 }
             }
         }
         .padding(12)
-        .background(RoundedRectangle(cornerRadius: 10).fill(color.opacity(0.12)))
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color(.secondarySystemGroupedBackground))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color(.separator), lineWidth: 0.6)
+        )
     }
 }
 
@@ -168,7 +170,7 @@ struct BuktiBayarPicker: View {
                 .font: UIFont.boldSystemFont(ofSize: 20),
                 .foregroundColor: UIColor.systemBlue
             ]
-            NSString(string: "BUKTI PELUNASAN - GARASIKU")
+            NSString(string: "Bukti Pelunasan")
                 .draw(at: CGPoint(x: 20, y: 16), withAttributes: titleAttr)
 
             let bodyAttr: [NSAttributedString.Key: Any] = [

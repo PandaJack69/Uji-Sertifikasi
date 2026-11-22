@@ -9,7 +9,7 @@ import Foundation
 import SQLite3
 
 final class DatabaseManager {
-    static let defaultAdminEmail = "admin@garasiku.id"
+    static let defaultAdminEmail = "admin@gmail.com"
     static let defaultAdminPassword = "admin123"
 
     var db: OpaquePointer?
@@ -29,10 +29,10 @@ final class DatabaseManager {
                 appropriateFor: nil,
                 create: true
             )
-            let folder = appSupport.appendingPathComponent("GarasiKu", isDirectory: true)
+            let folder = appSupport.appendingPathComponent("Uji-Sertifikasi-Artan", isDirectory: true)
             let buktiFolder = folder.appendingPathComponent("BuktiBayar", isDirectory: true)
             try FileManager.default.createDirectory(at: buktiFolder, withIntermediateDirectories: true)
-            path = folder.appendingPathComponent("garasiku_v2.sqlite").path
+            path = folder.appendingPathComponent("uji-sertifikasi-artan_v2.sqlite").path
             self.buktiDirURL = buktiFolder
         }
 
@@ -118,7 +118,7 @@ final class DatabaseManager {
     private func seedAdminDefault() throws {
         if try cariUser(email: Self.defaultAdminEmail) != nil { return }
         let admin = Admin(
-            namaAdmin: "Administrator GarasiKu",
+            namaAdmin: "Administrator",
             email: Self.defaultAdminEmail,
             password: FormatHelper.hashPassword(Self.defaultAdminPassword)
         )

@@ -18,9 +18,9 @@ struct AdminGarasiView: View {
                 VStack(spacing: 16) {
                     // Ringkasan KPI
                     HStack(spacing: 8) {
-                        MetricBox(title: "Total", value: "\(viewModel.daftarGarasi.count)", icon: "square.grid.2x2.fill")
-                        MetricBox(title: "Available", value: "\(viewModel.jumlahAvailable)", icon: "checkmark.circle.fill", color: .green)
-                        MetricBox(title: "Used", value: "\(viewModel.jumlahUsed)", icon: "lock.fill", color: .red)
+                        MetricBox(title: "Total", value: "\(viewModel.daftarGarasi.count)")
+                        MetricBox(title: "Available", value: "\(viewModel.jumlahAvailable)")
+                        MetricBox(title: "Used", value: "\(viewModel.jumlahUsed)")
                     }
 
                     // Filter Tipe Garasi
@@ -42,7 +42,7 @@ struct AdminGarasiView: View {
 
                     if viewModel.garasiTerfilter.isEmpty {
                         ContentUnavailableView {
-                            Label("Belum Ada Garasi", systemImage: "car.garage.closed")
+                            Label("Belum Ada Garasi", systemImage: "car.2.fill")
                         } description: {
                             Text("Tambahkan garasi sepeda, mobil, atau mobil listrik secara berkelompok.")
                         } actions: {
